@@ -1,6 +1,5 @@
 'use server'
 
-import { redirect } from 'next/navigation'
 import { revalidatePath } from "next/cache"
 import { validateFormData } from "@/utils/task.validation.utils"
 import { Task } from '@/types/task.type'
@@ -28,14 +27,11 @@ export async function createTask(prevState: null, formData: FormData) {
       body: JSON.stringify(data),
     })
 
-    const resJson = await res.json()
-
-    console.log(resJson)
-
     if (!res.ok) {
       return { message: 'Failed to create task' }
     }
 
+    revalidatePath("/")
     return { message: 'success' }
   } catch (error) {
     return { message: error instanceof Error ? error.message : 'An unexpected error occurred' }
@@ -61,7 +57,7 @@ export async function updateTask(prevState: null, formData: FormData) {
       return { message: 'Failed to update task' }
     }
 
-    // revalidatePath("/tasks")
+    revalidatePath("/")
     return { message: 'success' }
   } catch (error) {
     return { message: error instanceof Error ? error.message : 'An unexpected error occurred' }
@@ -79,7 +75,7 @@ export async function toggleTaskComplete(task: Task): Promise<Task> {
     throw new Error("Failed to toggle task complete");
   }
 
-  revalidatePath("/tasks")
+  revalidatePath("/")
   return res.json();
 }
 
@@ -99,6 +95,5 @@ export async function deleteTask(prevState: null, formData: FormData) {
   }
 
   revalidatePath("/")
-  redirect('/')
 }
 
