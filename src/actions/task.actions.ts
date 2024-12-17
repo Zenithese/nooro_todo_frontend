@@ -11,11 +11,16 @@ if (!process.env.API_URL) {
 const BACKEND_URL = `${process.env.API_URL}`
 
 export async function getAllTasks() {
-  const res = await fetch(`${BACKEND_URL}/task`)
+  const res = await fetch(`${BACKEND_URL}/task`, {
+    method: "GET",
+    cache: "no-store",
+  });
+
   if (!res.ok) {
-    throw new Error("Failed to fetch tasks")
+    throw new Error("Failed to fetch tasks");
   }
-  return res.json()
+
+  return res.json();
 }
 
 export async function createTask(prevState: null, formData: FormData) {
