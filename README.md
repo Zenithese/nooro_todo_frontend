@@ -51,17 +51,8 @@ API_URL=http://localhost:8080/api/v1
 
 ## Running the project:
 
-**Developement mode**:
-
 ```bash
 npm run dev
-```
-
-**Production mode**:
-
-```bash
-npm run build
-npm start
 ```
 
 ## Contact
